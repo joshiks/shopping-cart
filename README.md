@@ -10,3 +10,4 @@ This repository has a project in Angular JS which has a list of shopping items a
 The shopping list is made according to category wise.That is category A and category B. And at last it displays the category wise total.
 
 
+![Screenshot (87)](https://user-images.githubusercontent.com/56087031/66216163-96e38000-e6e2-11e9-9d9f-0805a30bf459.png)
