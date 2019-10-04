@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script type="text/javascript">
+var app = angular.module('myApp', ["ngStorage"])
+app.controller('MyChildController', function ($scope, $window) {
+$scope.sele= $window.selected;
+
+
+
+});
+</script>
+
+
+
+</body>
+</html>

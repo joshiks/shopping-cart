@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<script src="angular.min.js"></script>
+<script src="style.css"></script>
+<head xmlns="http://www.w3.org/1999/html">
+    <title>"Item List"</title>
+</head>
+<body>
+<div ng-app="myModule" ng-controller="myController">
+<h2 align="center">Angular Item List</h2>
+<table >
+    <link rel="stylesheet" href="style.css">
+    <thead>
+    <tr>
+        <th>Item</th>
+        <th>Type of Item</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Select Item</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="item in items">
+        <td>{{item.name}}</td>
+        <td>{{item.item_type}}</td>
+        <td>{{item.price}}</td>
+          <td><input type="text" ng-model="qty"/></td>
+        <td>
+            <input type="button" ng-click="type_check($index,qty)" value="Select" />
+        </td>
+    </tr>
+    </tbody>
+</table>
+    <br>
+    <br>
+
+<h2 align="center">Selected Items</h2>
+    <table>
+        <thead>
+            <th>Item Name</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+           <tr ng-repeat="sel in selected">
+               <td>{{sel.name}}</td>
+               <td>{{sel.qty}}</td>
+               <td>{{sel.total}}</td>
+
+           </tr>
+        </tbody>
+
+    </table>
+    <br><br>
+    <button ng-click="show_selected()" width="100px">Finish</button>
+</div>
+
+<script>
+   // ng-click="show_selected({{show_A}},{{show_B}})"
+   var app=angular.module('myModule', []);
+   app.controller('myController', function ($scope,$window) {
+       $scope.items = [
+           {name: "Pencil", price: 7, item_type: 'A'},
+           {name: "Eraser", price: 5, item_type: 'A'},
+           {name: "Notebook", price: 45, item_type: 'A'},
+           {name: "Pen", price: 10, item_type: 'A'},
+           {name: "Pen drive", price: 1000, item_type: 'B'},
+           {name: "Mouse", price: 600, item_type: 'B'},
+           {name: "Head Phone", price:2000, item_type: 'B'},
+           {name: "Mobile", price: 12000, item_type: 'B'}
+       ];
+
+       $scope.selected=[
+       ];
+
+
+       $scope.type_check=function (index,qty)
+       {
+           var select={};
+          select.name=$scope.items[index].name;
+          select.qty=qty;
+           var total1=$scope.items[index].price*qty;
+           select.total=total1;
+          var type=$scope.items[index].item_type;
+
+          $scope.selected.push(select);
+
+
+           if(type==('A'))
+           {
+               $scope.count=0;
+               $scope.cal_costA($scope.items[index].price,qty);
+           }
+           else
+           {
+               $scope.cal_costB($scope.items[index].price,qty);
+           }
+
+       }
+       var total_costB= 0;
+       var total_costA = 0;
+       $scope.show_B=0;
+       $scope.show_A=0;
+       $scope.cal_costA=function (item_price,qty)
+        {
+
+            total_costA += item_price*qty;
+            $scope.show_A=total_costA;
+        }
+
+        $scope.cal_costB=function (item_price,qty)
+        {
+
+            total_costB=total_costB+item_price*qty;
+            $scope.show_B=total_costB;
+        }
+
+       var $Window;
+       $scope.show_selected=function () {
+
+          $Window = $window.open("new.html", "_blank", "width=400, height=450");
+          $Window.document.write("Total price of Item A:"+$scope.show_A+" <br>  Total price of Item B:"+$scope.show_B);
+
+
+       }
+        });
+
+    
+</script>
+</body>
+</html>
